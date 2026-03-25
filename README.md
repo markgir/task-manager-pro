@@ -14,11 +14,33 @@ Uma aplicação moderna de gestão de tarefas construída com **Node.js**, **Exp
 - 🛡️ **Segurança** — Helmet, CORS, rate limiting, sanitização de inputs, proteção XSS
 - 📊 **Estatísticas** — Dashboard com contadores de tarefas por estado
 
-## 🚀 Começar
+## ⚡ Instalação Rápida (Quick Setup)
+
+A forma mais rápida de começar — basta um comando:
+
+```bash
+git clone https://github.com/markgir/task-manager-pro.git
+cd task-manager-pro
+./setup.sh
+```
+
+O script `setup.sh` faz tudo automaticamente:
+
+1. ✅ Verifica se o **Node.js** (>= 14) está instalado — e instala se necessário
+2. ✅ Verifica se o **npm** está disponível — e instala se necessário
+3. ✅ Instala todas as **dependências** do projeto (`npm install`)
+4. ✅ Oferece a opção de **executar os testes**
+5. ✅ **Inicia a aplicação** automaticamente
+
+> **Sistemas suportados:** Ubuntu/Debian, Fedora/RHEL/CentOS, Arch/Manjaro e macOS (Homebrew).
+
+---
+
+## 🚀 Começar (Manual)
 
 ### Pré-requisitos
 
-- Node.js 16+ 
+- Node.js 14+ 
 - npm
 
 ### Instalação
