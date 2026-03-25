@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║           TOAST NOTIFICATIONS             ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║           AUTH: LOGIN PAGE                ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div id="page-login" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo"><span class="icon">📋</span> Task Manager Pro</div>
+      <p class="auth-subtitle">Inicie sessão na sua conta</p>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" class="form-input" placeholder="nome@email.com" autocomplete="email" required>
+          <div class="form-error" id="login-email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-password" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" data-target="login-password" title="Mostrar password">👁</button>
+          </div>
+          <div class="form-error" id="login-password-error"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-btn">
+          Entrar
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Não tem conta? <a href="#" id="goto-register">Criar conta</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║          AUTH: REGISTER PAGE              ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div id="page-register" class="auth-wrapper hidden">
+    <div class="auth-card">
+      <div class="auth-logo"><span class="icon">📋</span> Task Manager Pro</div>
+      <p class="auth-subtitle">Crie a sua conta gratuitamente</p>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label for="reg-name">Nome</label>
+          <input type="text" id="reg-name" class="form-input" placeholder="O seu nome" autocomplete="name" required>
+          <div class="form-error" id="reg-name-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="nome@email.com" autocomplete="email" required>
+          <div class="form-error" id="reg-email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="reg-password" class="form-input" placeholder="Mín. 6 caracteres" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-target="reg-password" title="Mostrar password">👁</button>
+          </div>
+          <div class="form-error" id="reg-password-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password-confirm">Confirmar Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="reg-password-confirm" class="form-input" placeholder="Repita a password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-target="reg-password-confirm" title="Mostrar password">👁</button>
+          </div>
+          <div class="form-error" id="reg-password-confirm-error"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="register-btn">
+          Criar Conta
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Já tem conta? <a href="#" id="goto-login">Iniciar sessão</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║          MAIN APP (DASHBOARD)             ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div id="page-app" class="app-layout hidden">
+
+    <!-- Mobile header -->
+    <div class="mobile-header">
+      <button class="hamburger" id="menu-toggle">☰</button>
+      <span class="logo">📋 Task Manager Pro</span>
+    </div>
+
+    <!-- Sidebar overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="icon">📋</span> Task Manager Pro
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-item active" data-filter="all">
+          <span class="icon">📊</span> Todas as Tarefas
+        </div>
+        <div class="sidebar-nav-item" data-filter="pending">
+          <span class="icon">⏳</span> Pendentes
+        </div>
+        <div class="sidebar-nav-item" data-filter="in_progress">
+          <span class="icon">🔄</span> Em Progresso
+        </div>
+        <div class="sidebar-nav-item" data-filter="completed">
+          <span class="icon">✅</span> Concluídas
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="user-avatar">U</div>
+          <div class="user-details">
+            <div class="user-name" id="user-name">Utilizador</div>
+            <div class="user-email" id="user-email">email@example.com</div>
+          </div>
+          <button class="btn btn-ghost btn-icon btn-sm" id="logout-btn" title="Sair">🚪</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">As Minhas Tarefas</h1>
+          <p class="page-description">Organize e acompanhe o progresso das suas tarefas</p>
+        </div>
+        <button class="btn btn-primary" id="add-task-btn">
+          <span>＋</span> Nova Tarefa
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon total">📊</div>
+          <div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon pending">⏳</div>
+          <div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-label">Pendentes</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon progress">🔄</div>
+          <div>
+            <div class="stat-value" id="stat-progress">0</div>
+            <div class="stat-label">Em Progresso</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon done">✅</div>
+          <div>
+            <div class="stat-value" id="stat-done">0</div>
+            <div class="stat-label">Concluídas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Pesquisar tarefas...">
+        </div>
+        <div class="filter-group">
+          <select class="form-select" id="filter-priority">
+            <option value="">Prioridade</option>
+            <option value="high">🔴 Alta</option>
+            <option value="medium">🟡 Média</option>
+            <option value="low">🟢 Baixa</option>
+          </select>
+          <select class="form-select" id="sort-select">
+            <option value="createdAt-desc">Mais recentes</option>
+            <option value="createdAt-asc">Mais antigas</option>
+            <option value="title-asc">Título A-Z</option>
+            <option value="title-desc">Título Z-A</option>
+            <option value="priority-desc">Prioridade ↓</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Task List -->
+      <div id="task-list" class="task-list">
+        <div class="loading-container">
+          <div class="spinner spinner-lg"></div>
+          <span>A carregar tarefas...</span>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination"></div>
+    </main>
+  </div>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║         MODAL: CREATE / EDIT TASK         ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Nova Tarefa</h3>
+        <button class="btn btn-ghost btn-icon btn-sm modal-close" data-modal="task-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="task-form" novalidate>
+          <input type="hidden" id="task-id">
+
+          <div class="form-group">
+            <label for="task-title">Título *</label>
+            <input type="text" id="task-title" class="form-input" placeholder="Ex: Concluir relatório mensal" required>
+            <div class="form-error" id="task-title-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="task-desc">Descrição</label>
+            <textarea id="task-desc" class="form-textarea" placeholder="Adicione detalhes sobre a tarefa..." rows="3"></textarea>
+            <div class="form-error" id="task-desc-error"></div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label for="task-status">Status</label>
+              <select id="task-status" class="form-select">
+                <option value="pending">⏳ Pendente</option>
+                <option value="in_progress">🔄 Em Progresso</option>
+                <option value="completed">✅ Concluída</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="task-priority">Prioridade</label>
+              <select id="task-priority" class="form-select">
+                <option value="low">🟢 Baixa</option>
+                <option value="medium" selected>🟡 Média</option>
+                <option value="high">🔴 Alta</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close" data-modal="task-modal">Cancelar</button>
+        <button class="btn btn-primary" id="save-task-btn">Guardar Tarefa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ╔═══════════════════════════════════════════╗ -->
+  <!-- ║           MODAL: CONFIRM DELETE           ║ -->
+  <!-- ╚═══════════════════════════════════════════╝ -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirmar Eliminação</h3>
+        <button class="btn btn-ghost btn-icon btn-sm modal-close" data-modal="confirm-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-body">
+          <div class="icon">⚠️</div>
+          <p>Tem a certeza que deseja eliminar esta tarefa?<br>Esta ação não pode ser revertida.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close" data-modal="confirm-modal">Cancelar</button>
+        <button class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
